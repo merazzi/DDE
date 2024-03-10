@@ -52,18 +52,28 @@ function burn(address from, uint256 value) public {
 
 // Funzione per modificare l’inflazione di riferimento
 
-// Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile
-/*  function updateReferencePrice() public {
+function InsertInflation(address to, uint256 value, uint _inputParam1) public{
+        //owner and voter set inflation european
+	inflation = _inputParam1 
+	
 	
 }
 
-function InsertInflation(address to, uint256 value) public{
-        //owner and 
+// Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
+
+function updateReferencePrice() public {
+	referencePrice = annualPrice + inflation //da mettere divisi per secondi in un mese
 }
+
+
 
 function stabilityFee(){
+	if (referencePrice < //acquisto){
+		fee = 0.002*(referencePrice* /* acquisto   */ - 1) // deve esserci l'uno percento di tolleranza
+	}else{
+		fee = 0.002*(/* acquisto   */  *referencePrice - 1) // deve esserci l'uno percento di tolleranza
+	}
 	
-
 }
 
   */ 
