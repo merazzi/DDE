@@ -26,6 +26,7 @@ event CollateralAdded(address indexed borrower, uint256 value);
 event Mint(address indexed to, uint256 value);
 event Burn(address indexed from, uint256 value);
 event updateReferencePrice(uint256 referencePrice);
+event stabilityFee();
 
 //creation and burn da mettere sotto l’owner
 constructor() {
@@ -53,16 +54,20 @@ function burn(address from, uint256 value) public {
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile
 /*  function updateReferencePrice() public {
-        uint256 timePassed = block.timestamp - lastPriceUpdateTimestamp;
-        if(newInflazione>vecchia){
-        }
-    }
+	
+}
 
-  function InsertInflation(address to, uint256 value) public{
-        
-    }
+function InsertInflation(address to, uint256 value) public{
+        //owner and 
+}
+
+function stabilityFee(){
+	
+
+}
+
   */ 
-//trasferimento
+
 function transfer(address to, uint256 value) external returns (bool) {
 require(balanceOf[msg.sender] >= value, "Insufficient balance");
 balanceOf[msg.sender] -= value;
