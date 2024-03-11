@@ -30,8 +30,8 @@ event stabilityFee();
 
 //creation and burn da mettere sotto l’owner
 constructor() {
-balanceOf[msg.sender] = totalSupply;
-owner = msg.sender;
+	balanceOf[msg.sender] = totalSupply;
+	owner = msg.sender;
 }
 
 function mint(address to, uint256 value) public {
@@ -52,9 +52,9 @@ function burn(address from, uint256 value) public {
 
 // Funzione per modificare l’inflazione di riferimento
 
-function InsertInflation(address to, uint256 value, uint _inputParam1) public{
+function InsertInflation(address to, uint256 value, uint _inputInflation) public{
         //owner and voter set inflation european
-	inflation = _inputParam1 
+	inflation = _inputInflation 
 	
 	
 }
