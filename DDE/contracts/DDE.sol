@@ -47,16 +47,28 @@ function burn(address from, uint256 value) public {
 // Funzione per modificare l’inflazione di riferimento
 
 function InsertInflation(address to, uint256 value, uint _inputInflation) public{
-        //owner and voter set inflation european al 
+        //owner and voter set inflation european 
 	address = owner
-	inflation = _inputInflation	
+	voter = voter address con un amount di 1000 DDE
+	inflationVote = _inputInflation
+	if (inflationOwner == inflationUser){ //votazione deve essere uguale
+		inflation = inflationVote	
+	}else{
+		msg.errore //errore
+		//ritorna la funzione con qualche 
+	}
 }
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
 
-function updateReferencePrice() public {	
-	referencePrice = annualPrice + inflation //da mettere divisi per secondi in un mese
-	
+function updateReferencePrice() public {
+	referencePriceOld = refencePrice 
+	referencePrice = annualPrice + inflation 
+	if (refencePriceOld < referencePrice){
+	referencePrice = annualPrice + inflation / (giorni * ore * minuti) //da mettere divisi per secondi in un mese
+	}else{
+	referencePrice = annualPrice + 
+	}
 }
 
 function stabilityFee(){
@@ -90,8 +102,7 @@ function transferFrom(address from, address to, uint256 value) external returns 
 	allowance[from][msg.sender] -= value;
 	emit Transfer(from, to, value);
 	return true;
-fee = 0.01
-// fee
+	fee = 0.01
 }
 
 
