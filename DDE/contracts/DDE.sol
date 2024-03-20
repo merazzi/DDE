@@ -8,7 +8,7 @@ contract DDE{
 string public name = "Digital Deflazionitic Euro";
 string public symbol = "DDE";
 uint256 public totalSupply = 1000 * 10**5; // mille token con 5 decimali
-address public owner = indirizzo metamask;
+address public owner = 0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8
 
 mapping(address => uint256) public balanceOf;
 mapping(address => uint256) public balances;
