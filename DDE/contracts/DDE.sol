@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -22,7 +21,6 @@ event updateReferencePrice(uint256 referencePrice);
 event updateInflation(uint256); 
 event stabilityFee();
 
-//creation and burn da mettere sotto l’owner
 constructor() {
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
@@ -53,24 +51,16 @@ function annualPrice(){
 function InsertInflation(address to, uint256 value, uint _inputInflation) public{ 
 	require(msg.sender=owner);
 	address = owner;
-	inflationOwner = _inputInflation
-	/*
-	voter = voter address con un amount di 1000 DDE
-	inflationVote = _inputInflation
-	if (inflationOwner == inflationUser){ 
-		inflation = _inflationVote	
-	else{
-		msg.errore //errore
-	}
-/*
+	inflationOwner = _inputInflation;
+	//introdurre votazione democratica
 }
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
 
 function updateReferencePrice() public {
 	// da mettere i giorni per mesi
-	referencePriceOld = refencePrice 
-	referencePrice = annualPrice + inflation 
+	referencePriceOld = refencePrice;
+	referencePrice = annualPrice + inflation;
 	if (refencePriceOld =< referencePrice){ 
 	referencePrice = annualPrice + inflation / (giorni * 86.400) //aumenta il prezzo
 	}else{ 
@@ -84,7 +74,6 @@ function stabilityFee(){
 	}else{
 		fee = 0.002*(/* acquisto   */  *referencePrice - 1) // deve esserci l'uno percento di tolleranza
 	}
-	
 }
 
 function transfer(address to, uint256 value) external returns (bool) {
