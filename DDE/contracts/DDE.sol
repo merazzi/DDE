@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 contract DDE{
 string public name = "Digital Deflazionitic Euro";
 string public symbol = "DDE";
-uint256 public totalSupply = 1000 * 10**5; // mille token con 5 decimali
+uint256 public totalSupply = 1000 * 10 * 5; // mille token con 5 decimali
 address public owner = 0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8
 
 mapping(address => uint256) public balanceOf;
@@ -46,26 +46,32 @@ function burn(address from, uint256 value) public {
 
 // Funzione per modificare l’inflazione di riferimento
 function annualPrice(){
+	//da mettere le funzioni di tempo per mese (con bisestile) block.timestamp
 	if (monthy="december" && day=31){
-		annualPrice = refencePrice
+	annualPrice = refencePrice;
 	}
 }
 
 function InsertInflation(address to, uint256 value, uint _inputInflation) public{
         //owner and voter set inflation european 
-	address = owner
+	require(msg.sender=owner);
+	address = owner;
+	inflationOwner = _inputInflation
+	/*
 	voter = voter address con un amount di 1000 DDE
 	inflationVote = _inputInflation
 	if (inflationOwner == inflationUser){ //votazione deve essere uguale
-		inflation = inflationVote	
-	}else{
+		inflation = _inflationVote	
+	else{
 		msg.errore //errore
 	}
+/*
 }
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
 
 function updateReferencePrice() public {
+	// da mettere i giorni per mesi
 	referencePriceOld = refencePrice 
 	referencePrice = annualPrice + inflation 
 	if (refencePriceOld =< referencePrice){ 
