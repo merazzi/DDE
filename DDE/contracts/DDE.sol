@@ -24,6 +24,7 @@ event stabilityFee();
 constructor() {
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
+	time = block.timestamp
 }
 
 function mint(address to, uint256 value) public {
@@ -41,18 +42,21 @@ function burn(address from, uint256 value) public {
 	emit Burn(from, value);
 }
 
-function annualPrice(){
-	//da mettere le funzioni di tempo per mese (con bisestile) block.timestamp
-	if (monthy="december" && day=31){
+function annualPrice() public{
+	//inserire l'anno anche per bisestile
+	annualOld = //controllo tempo da un anno all'altro
+	
+	if(time > 
 	annualPrice = refencePrice;
-	}
+	
 }
 
 function InsertInflation(address to, uint256 value, uint _inputInflation) public{ 
 	require(msg.sender=owner);
+	//require 4 week
 	address = owner;
 	inflationOwner = _inputInflation;
-	//introdurre votazione democratica
+	//introdurre votazione democratica con l'approvazione dell'owner
 }
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
