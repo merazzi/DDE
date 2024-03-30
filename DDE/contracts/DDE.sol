@@ -22,20 +22,20 @@ event updateReferencePrice(uint256 referencePrice);
 event updateInflation(uint256); 
 event stabilityFee();
 
-constructor() {
+constructor() { //ok
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
 	time = block.timestamp
 }
 
-function mint(address to, uint256 value) public {
+function mint(address to, uint256 value) public { //only owner ok
 	require(msg.sender == owner);
 	balances[to] += value;
 	totalSupply += value;
 	emit Mint(to, value);
 }
 
-function burn(address from, uint256 value) public {
+function burn(address from, uint256 value) public { //only owner ok
 	require(msg.sender == owner);
 	require(balances[from] >= value, "Saldo insufficiente");
 	balances[from] -= value;
@@ -75,13 +75,20 @@ function updateReferencePrice() public {
 
 function stabilityFee(){
 	if (referencePrice < //acquisto){
-		fee = 0.002*(referencePrice* /* acquisto   */ - 1) // deve esserci l'uno percento di tolleranza
+		fee = refencePrice - //acquisto * //amount
+		payable(owner).transfer(fee);
 	}else{
-		fee = 0.002*(/* acquisto   */  *referencePrice - 1) // deve esserci l'uno percento di tolleranza
+		//avverto l'utente della transazione che più alta del 1%
+	
 	}
 }
 
-function transfer(address to, uint256 value) external returns (bool) {
+function proofReserve(){
+
+
+}
+
+function transfer(address to, uint256 value) external returns (bool) {  //ok
 	require(balanceOf[msg.sender] >= value, "Insufficient balance");
 	balanceOf[msg.sender] -= value;
 	balanceOf[to] += value;
@@ -89,13 +96,13 @@ function transfer(address to, uint256 value) external returns (bool) {
 	return true;
 }
 
-function approve(address spender, uint256 value) external returns (bool) {
+function approve(address spender, uint256 value) external returns (bool) { //ok
 	allowance[msg.sender][spender] = value;
 	emit Approval(msg.sender, spender, value);
 	return true;
 }
 
-function transferFrom(address from, address to, uint256 value) external returns (bool) {
+function transferFrom(address from, address to, uint256 value) external returns (bool) { //ok
 	require(balanceOf[from] >= value, "Insufficient balance");
 	require(allowance[from][msg.sender] >= value, "Insufficient allowance");
 	balanceOf[from] -= value;
