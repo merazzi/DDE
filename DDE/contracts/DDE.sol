@@ -26,8 +26,8 @@ constructor() { //ok
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
 	time = block.timestamp;
-	year = 48 week;
-	month = 30 day; 
+	year = 365.24 days;
+	month = 30 days; 
 	reserve = AggregatorV3Interface(0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8);
 }
 
@@ -67,10 +67,10 @@ function updateReferencePrice() public {
 	// require la data precedente e controllare che sia giusta ovvero un mese
 	referencePriceOld = refencePrice;
 	referencePrice = annualPrice + inflation;
-	if (refencePriceOld =< referencePrice){ 
-	referencePrice = annualPrice + inflation / ( g in mese * 86.400) //aumenta il prezzo
+	if (refencePriceOld <= referencePrice){ 
+	referencePrice = annualPrice + inflation / ( month * 86.400); //aumenta il prezzo
 	}else{ 
-	referencePrice = annualPrice - inflation /  ( * 86.400) // riduce il prezzo
+	referencePrice = annualPrice - inflation /  ( month * 86.400); // riduce il prezzo
 	}
 }
 
@@ -112,6 +112,7 @@ function transferFrom(address from, address to, uint256 value) external returns 
 	allowance[from][msg.sender] -= value;
 	emit Transfer(from, to, value);
 	return true;
+}
 }
 
 
