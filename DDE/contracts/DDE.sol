@@ -8,7 +8,7 @@ contract DDE{
 string public name = "Digital deflationary Euro";
 string public symbol = "DDE";
 uint256 public totalSupply = 1000 * 5; // mille token con 5 decimali
-address public owner = 0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8
+address public owner = 0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8;
 
 mapping(address => uint256) public balanceOf;
 mapping(address => uint256) public balances;
@@ -25,9 +25,9 @@ event stabilityFee();
 constructor() { //ok
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
-	time = block.timestamp
-	year = 48 week
-	month = 30 day 
+	time = block.timestamp;
+	year = 48 week;
+	month = 30 day; 
 	reserve = AggregatorV3Interface(0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8);
 }
 
@@ -48,8 +48,8 @@ function burn(address from, uint256 value) public { //only owner ok
 
 function annualPrice() public{
 	dataOld = //
-	data = time
-	require(data == dataOld + year)
+	data = time;
+	require(data == dataOld + year);
 	annualPrice = refencePrice;
 }
 
@@ -76,11 +76,11 @@ function updateReferencePrice() public {
 
 function stabilityFee(){
 	if (referencePrice < //acquisto){
-		fee = refencePrice - //acquisto * //amount
+		fee = refencePrice - //acquisto * //amount;
 		payable(owner).transfer(fee);
 	}else{
 		//avverto l'utente della transazione che più alta del 1% altrimenti fee
-		fee = refencePrice - //acquisto * //amount
+		fee = refencePrice - //acquisto * //amount;
 		payable(owner).transfer(fee);
 	}
 }
