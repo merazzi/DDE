@@ -36,7 +36,21 @@ constructor() { //ok
 	uint256 data;
 
 }
+/*
+contract TokenPriceKeeper {
+    AggregatorV3Interface internal priceFeed; // L'interfaccia dell'oracolo Chainlink
 
+    constructor(address _priceFeedAddress) {
+        priceFeed = AggregatorV3Interface(_priceFeedAddress);
+    }
+
+    // Funzione per ottenere il prezzo attuale del token
+    function getTokenPrice() external view returns (int256) {
+        (, int256 price, , , ) = priceFeed.latestRoundData();
+        return price;
+    }
+}
+*/
 function mint(address to, uint256 value) public { //only owner ok
 	require(msg.sender == owner);
 	balances[to] += value;
