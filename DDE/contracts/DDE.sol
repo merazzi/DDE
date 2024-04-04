@@ -30,9 +30,10 @@ constructor() { //ok
 	uint160 year = 365.24 days;
 	uint256 month = 30 days; 
 	uint256 yearsOld = time - 1;
-	uint256 reserve = AggregatorV3Interface(0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8);
+	uint256 reserve = AggregatorV3Interface(_Reserve);
 	uint256 referencePrice;
 	uint256 referencePriceOld;
+	uint256 priceExchange = AggregatorV3Interface(_PriceTracker);
 	uint256 data;
 
 }
@@ -96,18 +97,18 @@ function updateReferencePrice(uint256 referencePrice,uint inflation, uint256 mon
 }
 
 function stabilityFee(uint256 referencePrice, uint256 fee, uint256 acquisto)public {
-	if (referencePrice < acquisto){
-		fee = referencePrice - acquisto ;
+	if (referencePrice < priceExchange){
+		fee = referencePrice - priceExchange;
 		payable(owner).transfer(fee);
 	}else{
 		//avverto l'utente della transazione che più alta del 1% altrimenti fee
-		fee = refencePrice - acquisto;
+		fee = refencePrice - priceExchange;
 		payable(owner).transfer(fee);
 	}
 }
 /*
 function Reserve(){
-	//proof of reserve
+	
 
 }
 */
