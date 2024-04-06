@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol"; //prova, voglio vedere quanto costa
 
-contract DDE{
+contract DigitalDeflationaryEuro{
 string public name = "Digital deflationary Euro";
 string public symbol = "DDE";
 uint256 public totalSupply = 1000 * 5; // mille token con 5 decimali
@@ -27,12 +27,11 @@ constructor() { //ok
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
 	uint256 time = block.timestamp;
-	uint160 year = 365.24 days;
-	uint256 month = 30 days; 
-	uint256 yearsOld = time - 1;
+	uint256 yearschain = block.timestamp + 1 year;
+	uint32 monthly = block.timestamp + 1 month;
 	uint256 reserve = AggregatorV3Interface(_Reserve);
+	uint256 basePrice;
 	uint256 referencePrice;
-	uint256 referencePriceOld;
 	uint256 priceExchange = AggregatorV3Interface(_PriceTracker);
 	uint256 data;
 
@@ -52,47 +51,28 @@ contract TokenPriceKeeper {
     }
 }
 */
-function mint(address to, uint256 value) public { //only owner ok
-	require(msg.sender == owner);
-	balances[to] += value;
-	totalSupply += value;
-	emit Mint(to, value);
+
+
+function basePrice(uint256 referencePrice, uint256 time, uint256 data, uint256 dataOld)public {
+	require(time == yearschain, "update refencePrice");
+	basePrice = refencePrice;
 }
 
-function burn(address from, uint256 value) public { //only owner ok
-	require(msg.sender == owner);
-	require(balances[from] >= value, "Saldo insufficiente");
-	balances[from] -= value;
-	totalSupply -= value;
-	emit Burn(from, value);
-}
-
-function annualPrice(uint256 referencePrice, uint256 time, uint256 data, uint256 dataOld)public {
-	dataOld = time - 1 years;
-	data = time;
-	//require(data == dataOld + year);
-
-}
-
-function InsertInflation(address to, uint256 value, uint _inputInflation, uint256 inflationOwner)public { 
-	require(msg.sender=owner);
-	//require 4 week
-	address = owner;
+function InsertInflation(address to, uint _inputInflation, uint256 inflationOwner)public { 
+	require(msg.sender=owner,"Only owner can use this function but work for create voter system");
+	require(time == monthly,"ok");
 	inflationOwner = _inputInflation;
-	//introdurre votazione democratica con l'approvazione dell'owner
-	referencePrice = referencePrice + inflationOwner;
+	refencePriceOld = refencePrice;
+	referencePrice = basePrice + inflationOwner;
 }
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
 
-function updateReferencePrice(uint256 referencePrice,uint inflation, uint256 month) public {
-	// require la data precedente e controllare che sia giusta ovvero un mese
-	referencePriceOld = refencePrice;
-	referencePrice = annualPrice + inflation;
+function updateReferencePrice(uint256 referencePrice,uint256 inflationOwner) public {
 	if (refencePriceOld <= referencePrice){ 
-	referencePrice = annualPrice + inflation / ( month * 86.400); //aumenta il prezzo
+	referencePrice = annualPrice + inflationOwner / ( month * 86.400); //aumenta il prezzo
 	}else{ 
-	referencePrice = annualPrice - inflation /  ( month * 86.400); // riduce il prezzo
+	referencePrice = annualPrice - inflationOwner /  ( month * 86.400); // riduce il prezzo
 	}
 }
 
@@ -106,12 +86,12 @@ function stabilityFee(uint256 referencePrice, uint256 fee, uint256 acquisto)publ
 		payable(owner).transfer(fee);
 	}
 }
-/*
-function Reserve(){
-	
 
+function Reserve(){
+	emit //scrivo all'utente la funzione
+	return reserve
 }
-*/
+
 function transfer(address to, uint256 value) external returns (bool) {  //ok
 	require(balanceOf[msg.sender] >= value, "Insufficient balance");
 	balanceOf[msg.sender] -= value;
@@ -135,6 +115,22 @@ function transferFrom(address from, address to, uint256 value) external returns 
 	emit Transfer(from, to, value);
 	return true;
 }
+
+function mint(address to, uint256 value) public { //only owner ok
+	require(msg.sender == owner);
+	balances[to] += value;
+	totalSupply += value;
+	emit Mint(to, value);
+}
+
+function burn(address from, uint256 value) public { //only owner ok
+	require(msg.sender == owner);
+	require(balances[from] >= value, "Saldo insufficiente");
+	balances[from] -= value;
+	totalSupply -= value;
+	emit Burn(from, value);
+}
+
 }
 
 
