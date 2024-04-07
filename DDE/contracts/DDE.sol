@@ -72,15 +72,15 @@ function updateReferencePrice(uint256 referencePrice,uint256 inflationOwner) pub
 	refencePriceOld = refencePrice;
 	refencePrice = basePrice + (basePrice/100) * inflationOwner
 	if (refencePriceOld <= referencePrice){ 
-	price = refencePrice / (1 month * 86.400); //aumenta il prezzo
+	price = refencePrice / 730 ; //aumenta il prezzo
 	}else{ 
-	price = refencePrice / (1 month * 86.400); // riduce il prezzo
+	price = refencePrice / 730; // riduce il prezzo
 	}
 }
 
 function price(){
 require(time == lastUpdate + 1 day,"update giornaliero")
-price += price;
+price = price + basePrice;
 lastUpdate = block.timestamp + 1 day;
 }
 
