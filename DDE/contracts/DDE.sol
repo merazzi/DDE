@@ -56,24 +56,39 @@ contract TokenPriceKeeper {
 function basePrice(uint256 referencePrice, uint256 time, uint256 data, uint256 dataOld)public {
 	require(time == yearschain, "update refencePrice");
 	basePrice = refencePrice;
+	refencePrice = 0;
+	yearschain = block.timestamp + 1 year;
 }
 
 function InsertInflation(address to, uint _inputInflation, uint256 inflationOwner)public { 
 	require(msg.sender=owner,"Only owner can use this function but work for create voter system");
 	require(time == monthly,"ok");
 	inflationOwner = _inputInflation;
-	refencePriceOld = refencePrice;
-	referencePrice = basePrice + inflationOwner;
 }
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
 
 function updateReferencePrice(uint256 referencePrice,uint256 inflationOwner) public {
+	refencePriceOld = refencePrice;
+	refencePrice = basePrice + (basePrice/100) * inflationOwner
 	if (refencePriceOld <= referencePrice){ 
-	referencePrice = annualPrice + inflationOwner / ( month * 86.400); //aumenta il prezzo
+	price = refencePrice / (1 month * 86.400); //aumenta il prezzo
 	}else{ 
-	referencePrice = annualPrice - inflationOwner /  ( month * 86.400); // riduce il prezzo
+	price = refencePrice / (1 month * 86.400); // riduce il prezzo
 	}
+}
+
+function price(){
+require(time == lastUpdate + 1 day,"update giornaliero")
+price += price;
+lastUpdate = block.timestamp + 1 day;
+}
+
+function priceExchange(uint256){
+
+
+
+
 }
 
 function stabilityFee(uint256 referencePrice, uint256 fee, uint256 acquisto)public {
@@ -91,6 +106,7 @@ function Reserve(){
 	emit //scrivo all'utente la funzione
 	return reserve
 }
+
 
 function transfer(address to, uint256 value) external returns (bool) {  //ok
 	require(balanceOf[msg.sender] >= value, "Insufficient balance");
