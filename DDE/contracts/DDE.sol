@@ -18,23 +18,21 @@ mapping(address => mapping(address => uint256)) public allowance;
 event Transfer(address indexed from, address indexed to, uint256 value);
 event Approval(address indexed owner, address indexed spender, uint256 value);
 event Mint(address indexed to, uint256 value);
-event Burn(address indexed from, uint256 value);
-event updateReferencePrice(uint256 referencePrice,uint inflation, uint256 month);
-event updateInflation(uint256); 
+event Burn(address indexed from, uint256 value); 
 event stabilityFee(uint256 referencePrice, uint256 fee, uint256 acquisto);
 
 constructor() { //ok
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
 	uint256 time = block.timestamp;
-	uint256 yearschain = block.timestamp + 1 year;
-	uint32 monthly = block.timestamp + 1 month;
-	uint256 reserve = AggregatorV3Interface(_Reserve);
+	uint256 yearschain = block.timestamp;
+	uint32 monthly = block.timestamp;
+	uint256 reserve = AggregatorV3Interface();
 	uint256 basePrice;
 	uint256 referencePrice;
-	uint256 priceExchange = AggregatorV3Interface(_PriceTracker);
+	uint256 priceExchange = AggregatorV3Interface();
 	uint256 data;
-
+	uint256 price;
 }
 /*
 contract TokenPriceKeeper {
@@ -53,37 +51,37 @@ contract TokenPriceKeeper {
 */
 
 
-function basePrice(uint256 referencePrice, uint256 time, uint256 data, uint256 dataOld)public {
+function newBasePrice(uint256 referencePrice, uint256 time, uint256 basePrice, uint256 yearschain)public {
 	require(time == yearschain, "update refencePrice");
-	basePrice = refencePrice;
-	refencePrice = 0;
-	yearschain = block.timestamp + 1 year;
+	basePrice = referencePrice;
+	uint256 refencePrice = 0;
 }
 
-function InsertInflation(address to, uint _inputInflation, uint256 inflationOwner)public { 
+function InsertInflation(address to,uint256 time, uint256 _inputInflation, uint256 inflationOwner, uint256 monthly)public { 
 	require(msg.sender=owner,"Only owner can use this function but work for create voter system");
 	require(time == monthly,"ok");
 	inflationOwner = _inputInflation;
+	monthly = time + 4 weeks;
 }
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
 
-function updateReferencePrice(uint256 referencePrice,uint256 inflationOwner) public {
-	refencePriceOld = refencePrice;
-	refencePrice = basePrice + (basePrice/100) * inflationOwner
-	if (refencePriceOld <= referencePrice){ 
-	price = refencePrice / 730 ; //aumenta il prezzo
+function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld, uint256 referencePrice, uint256 basePrice) public {
+	referencePriceOld = referencePrice;
+	referencePrice = basePrice + (basePrice/100) * inflationOwner;
+	if (referencePriceOld <= referencePrice){ 
+	price = referencePrice / 730 ; //aumenta il prezzo
 	}else{ 
-	price = refencePrice / 730; // riduce il prezzo
+	price = referencePrice / 730; // riduce il prezzo
 	}
 }
 
-function price(){
-require(time == lastUpdate + 1 day,"update giornaliero")
+function price(uint256 time, uint256 lastUpdate, uint256 price, uint256 basePrice){
+require(time == lastUpdate,"update giornaliero");
 price = price + basePrice;
-lastUpdate = block.timestamp + 1 day;
+lastUpdate = time + 24 hours;
 }
-
+/*
 function priceExchange(uint256){
 
 
@@ -91,7 +89,7 @@ function priceExchange(uint256){
 
 }
 
-function stabilityFee(uint256 referencePrice, uint256 fee, uint256 acquisto)public {
+function stabilityFee(uint256 referencePrice, uint256 fee){
 	if (referencePrice < priceExchange){
 		fee = referencePrice - priceExchange;
 		payable(owner).transfer(fee);
@@ -103,10 +101,10 @@ function stabilityFee(uint256 referencePrice, uint256 fee, uint256 acquisto)publ
 }
 
 function Reserve(){
-	emit //scrivo all'utente la funzione
-	return reserve
+	emit msg("reserve"); //scrivo all'utente la funzione
+	return reserve;
 }
-
+*/
 
 function transfer(address to, uint256 value) external returns (bool) {  //ok
 	require(balanceOf[msg.sender] >= value, "Insufficient balance");
@@ -148,7 +146,3 @@ function burn(address from, uint256 value) public { //only owner ok
 }
 
 }
-
-
-
-
