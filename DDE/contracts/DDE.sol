@@ -1,4 +1,4 @@
-pragma solidity ^0.8.20; //SPDX-License-Inde
+pragma solidity 0.8.20; //SPDX-License-Inde
 
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -24,16 +24,9 @@ event stabilityFee(uint256 referencePrice, uint256 fee, uint256 acquisto);
 constructor() { //ok
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
-	uint256 time = block.timestamp;
-	uint256 yearschain = block.timestamp;
-	uint32 monthly = block.timestamp;
-	uint256 reserve = AggregatorV3Interface();
-	uint256 basePrice;
-	uint256 referencePrice;
-	uint256 priceExchange = AggregatorV3Interface();
-	uint256 data;
-	uint256 price;
-}
+	//uint256 reserve = AggregatorV3Interface();
+	//uint256 priceExchange = AggregatorV3Interface();
+	}
 /*
 contract TokenPriceKeeper {
     AggregatorV3Interface internal priceFeed; // L'interfaccia dell'oracolo Chainlink
@@ -51,22 +44,21 @@ contract TokenPriceKeeper {
 */
 
 
-function newBasePrice(uint256 referencePrice, uint256 time, uint256 basePrice, uint256 yearschain)public {
-	require(time == yearschain, "update refencePrice");
+function newBasePrice(uint256 annual,uint256 referencePrice, uint256 basePrice, uint256 yearschain)public {
+	require(block.timestamp == yearschain, "update refencePrice");
 	basePrice = referencePrice;
-	uint256 refencePrice = 0;
+	annual = block.timestamp + 48 weeks; 
 }
 
-function InsertInflation(address to,uint256 time, uint256 _inputInflation, uint256 inflationOwner, uint256 monthly)public { 
-	require(msg.sender=owner,"Only owner can use this function but work for create voter system");
-	require(time == monthly,"ok");
+function InsertInflation(address to,uint256 _inputInflation, uint256 inflationOwner, uint256 monthly)private   { 
+	require(msg.sender==owner,"Only owner can use this function but work for create voter system");
+	require(block.timestamp == monthly,"ok");
 	inflationOwner = _inputInflation;
-	monthly = time + 4 weeks;
 }
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
 
-function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld, uint256 referencePrice, uint256 basePrice) public {
+function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld, uint256 referencePrice, uint256 basePrice, uint256 price)view public {
 	referencePriceOld = referencePrice;
 	referencePrice = basePrice + (basePrice/100) * inflationOwner;
 	if (referencePriceOld <= referencePrice){ 
@@ -76,10 +68,10 @@ function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld,
 	}
 }
 
-function price(uint256 time, uint256 lastUpdate, uint256 price, uint256 basePrice){
-require(time == lastUpdate,"update giornaliero");
-price = price + basePrice;
-lastUpdate = time + 24 hours;
+function newPrice(uint256 time, uint256 lastUpdate, uint256 price, uint256 basePrice)public {
+	require(time == lastUpdate,"update giornaliero");
+	price = price + basePrice;
+	lastUpdate = time + 24 hours;
 }
 /*
 function priceExchange(uint256){
