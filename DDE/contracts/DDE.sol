@@ -1,9 +1,9 @@
-pragma solidity 0.8.20; //SPDX-License-Inde
+pragma solidity 0.8.20; //SPDX-License-Identifier: UNLICENSED
 
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol"; //prova, voglio vedere quanto costa
+import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
 contract DigitalDeflationaryEuro{
 string public name = "Digital deflationary Euro";
@@ -44,13 +44,13 @@ contract TokenPriceKeeper {
 */
 
 
-function newBasePrice(uint256 annual,uint256 referencePrice, uint256 basePrice, uint256 yearschain)public {
-	require(block.timestamp == yearschain, "update refencePrice");
+function newBasePrice(uint256 referencePrice, uint256 basePrice)public view returns (uint256 annual){
+	require(block.timestamp == annual, "update refencePrice");
 	basePrice = referencePrice;
 	annual = block.timestamp + 48 weeks; 
 }
 
-function InsertInflation(address to,uint256 _inputInflation, uint256 inflationOwner, uint256 monthly)private   { 
+function InsertInflation(uint256 _inputInflation, uint256 inflationOwner, uint256 monthly)private view { 
 	require(msg.sender==owner,"Only owner can use this function but work for create voter system");
 	require(block.timestamp == monthly,"ok");
 	inflationOwner = _inputInflation;
@@ -58,20 +58,18 @@ function InsertInflation(address to,uint256 _inputInflation, uint256 inflationOw
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
 
-function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld, uint256 referencePrice, uint256 basePrice, uint256 price)view public {
+function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld, uint256 referencePrice, uint256 basePrice) public pure returns(uint256 result){
 	referencePriceOld = referencePrice;
 	referencePrice = basePrice + (basePrice/100) * inflationOwner;
 	if (referencePriceOld <= referencePrice){ 
-	price = referencePrice / 730 ; //aumenta il prezzo
+	result = referencePrice / 730 ; //aumenta il prezzo
 	}else{ 
-	price = referencePrice / 730; // riduce il prezzo
+	result = referencePrice / 730; // riduce il prezzo
 	}
 }
 
-function newPrice(uint256 time, uint256 lastUpdate, uint256 price, uint256 basePrice)public {
-	require(time == lastUpdate,"update giornaliero");
-	price = price + basePrice;
-	lastUpdate = time + 24 hours;
+function newPrice(uint256 add, uint256 basePrice) public pure returns(uint256 price){
+	price = add + basePrice;
 }
 /*
 function priceExchange(uint256){
@@ -98,13 +96,14 @@ function Reserve(){
 }
 */
 
-function transfer(address to, uint256 value) external returns (bool) {  //ok
+function transfer(address to, uint256 value) external returns (bool) { 
 	require(balanceOf[msg.sender] >= value, "Insufficient balance");
 	balanceOf[msg.sender] -= value;
 	balanceOf[to] += value;
 	emit Transfer(msg.sender, to, value);
 	return true;
 }
+
 
 function approve(address spender, uint256 value) external returns (bool) { //ok
 	allowance[msg.sender][spender] = value;
