@@ -1,6 +1,5 @@
 pragma solidity 0.8.20; //SPDX-License-Identifier: UNLICENSED
 
-
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
@@ -10,6 +9,9 @@ string public name = "Digital deflationary Euro";
 string public symbol = "DDE";
 uint256 public totalSupply = 1000 * 5; // mille token con 5 decimali
 address public owner = 0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8;
+uint256 public price;
+uint256 public annual = block.timestamp + 48 weeks;
+uint256 public monthly = block.timestamp + 4 weeks;
 
 mapping(address => uint256) public balanceOf;
 mapping(address => uint256) public balances;
@@ -44,38 +46,33 @@ contract TokenPriceKeeper {
 */
 
 
-function newBasePrice(uint256 referencePrice, uint256 basePrice)public view returns (uint256 annual){
+function newBasePrice(uint256 referencePrice, uint256 basePrice)public {
 	require(block.timestamp == annual, "update refencePrice");
 	basePrice = referencePrice;
-	annual = block.timestamp + 48 weeks; 
+	annual = block.timestamp + 48 weeks;
 }
 
-function InsertInflation(uint256 _inputInflation, uint256 inflationOwner, uint256 monthly)private view { 
+function InsertInflation(uint256 _inputInflation, uint256 inflationOwner)private  { 
 	require(msg.sender==owner,"Only owner can use this function but work for create voter system");
 	require(block.timestamp == monthly,"ok");
 	inflationOwner = _inputInflation;
+	monthly = block.timestamp + 4 weeks;
 }
 
-// Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile divisa in secondi per mese
+// Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile fatta su mese 
 
-function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld, uint256 referencePrice, uint256 basePrice) public pure returns(uint256 result){
-	referencePriceOld = referencePrice;
+function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld, uint256 referencePrice, uint256 basePrice) public{
+	referencePriceOld = referencePrice + 0;
 	referencePrice = basePrice + (basePrice/100) * inflationOwner;
-	if (referencePriceOld <= referencePrice){ 
-	result = referencePrice / 730 ; //aumenta il prezzo
+	if (referencePrice >= referencePriceOld){ 
+	price = referencePrice;
 	}else{ 
-	result = referencePrice / 730; // riduce il prezzo
+	price = referencePriceOld;
 	}
 }
 
-function newPrice(uint256 add, uint256 basePrice) public pure returns(uint256 price){
-	price = add + basePrice;
-}
 /*
 function priceExchange(uint256){
-
-
-
 
 }
 
@@ -90,9 +87,8 @@ function stabilityFee(uint256 referencePrice, uint256 fee){
 	}
 }
 
-function Reserve(){
+function Reserve()public view {
 	emit msg("reserve"); //scrivo all'utente la funzione
-	return reserve;
 }
 */
 
@@ -135,5 +131,4 @@ function burn(address from, uint256 value) public { //only owner ok
 	totalSupply -= value;
 	emit Burn(from, value);
 }
-
 }
