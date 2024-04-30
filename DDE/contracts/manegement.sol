@@ -1,5 +1,5 @@
 
-
+contract management(){
 function mint(address to, uint256 value) public { //only owner ok
 	require(msg.sender == owner);
 	balances[to] += value;
@@ -13,4 +13,5 @@ function burn(address from, uint256 value) public { //only owner ok
 	balances[from] -= value;
 	totalSupply -= value;
 	emit Burn(from, value);
+}
 }
