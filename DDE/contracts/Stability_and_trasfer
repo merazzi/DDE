@@ -7,7 +7,7 @@ DDE.sol public price;
 // devo mettere apposto l'importazione della variabile price
 constructor(address _indirizzoAltroContratto) {
 	istanzaAltroContratto = AltroContratto(_indirizzoAltroContratto);
-	//uint256 priceExchange = AggregatorV3Interface();
+	uint256 priceExchange = AggregatorV3Interface();
 	}
 /*
 contract TokenPriceKeeper {
