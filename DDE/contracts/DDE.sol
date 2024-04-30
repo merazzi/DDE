@@ -30,21 +30,6 @@ constructor() { //ok
 	//uint256 reserve = AggregatorV3Interface();
 	//uint256 priceExchange = AggregatorV3Interface();
 	}
-/*
-contract TokenPriceKeeper {
-    AggregatorV3Interface internal priceFeed; // L'interfaccia dell'oracolo Chainlink
-
-    constructor(address _priceFeedAddress) {
-        priceFeed = AggregatorV3Interface(_priceFeedAddress);
-    }
-
-    // Funzione per ottenere il prezzo attuale del token
-    function getTokenPrice() external view returns (int256) {
-        (, int256 price, , , ) = priceFeed.latestRoundData();
-        return price;
-    }
-}
-*/
 
 function newBasePrice(uint256 referencePrice, uint256 basePrice)public {
 	if(annual != 0){
@@ -78,21 +63,4 @@ function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld,
 	price = referencePriceOld;
 	}
 }
-
-/*
-function priceExchange(uint256){
-
-}
-
-function stabilityFee(uint256 referencePrice, uint256 fee){ //da mettere nelle funzioni di trasferimento
-	if (referencePrice < priceExchange){
-		fee = referencePrice - priceExchange;
-		payable(owner).transfer(fee);
-	}else{
-		//avverto l'utente della transazione che più alta del 1% altrimenti fee
-		fee = refencePrice - priceExchange;
-		payable(owner).transfer(fee);
-	}
-	}
-/*
 }
