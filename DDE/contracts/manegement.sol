@@ -1,5 +1,5 @@
+contract management{
 
-contract management(){
 function mint(address to, uint256 value) public { //only owner ok
 	require(msg.sender == owner);
 	balances[to] += value;
