@@ -20,15 +20,12 @@ mapping(address => mapping(address => uint256)) public allowance;
 
 event Transfer(address indexed from, address indexed to, uint256 value);
 event Approval(address indexed owner, address indexed spender, uint256 value);
-event Mint(address indexed to, uint256 value);
-event Burn(address indexed from, uint256 value); 
+
 event stabilityFee(uint256 referencePrice, uint256 fee, uint256 acquisto);
 
-constructor() { //ok
+constructor() { 
 	balanceOf[msg.sender] = totalSupply;
 	owner = msg.sender;
-	//uint256 reserve = AggregatorV3Interface();
-	//uint256 priceExchange = AggregatorV3Interface();
 	}
 
 function newBasePrice(uint256 referencePrice, uint256 basePrice)public {
