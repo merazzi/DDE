@@ -1,4 +1,7 @@
 // optimation fee
+import "./DDE.sol";
+
+
 contract stability_and_transfer{
 
 constructor() {
