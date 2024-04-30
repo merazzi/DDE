@@ -10,8 +10,9 @@ string public symbol = "DDE";
 uint256 public totalSupply = 1000 * 5; // mille token con 5 decimali
 address public owner = 0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8;
 uint256 public price;
-uint256 public annual = block.timestamp + 48 weeks;
-uint256 public monthly = block.timestamp + 4 weeks;
+uint256 public annual;
+uint256 public monthly;
+
 
 mapping(address => uint256) public balanceOf;
 mapping(address => uint256) public balances;
@@ -45,24 +46,31 @@ contract TokenPriceKeeper {
 }
 */
 
-
 function newBasePrice(uint256 referencePrice, uint256 basePrice)public {
+	if(annual != 0){
 	require(block.timestamp == annual, "update refencePrice");
 	basePrice = referencePrice;
 	annual = block.timestamp + 48 weeks;
+	}else{
+	annual = block.timestamp + 48 weeks;
+	}
 }
 
 function InsertInflation(uint256 _inputInflation, uint256 inflationOwner)private  { 
+	if(monthly != 0){
 	require(msg.sender==owner,"Only owner can use this function but work for create voter system");
 	require(block.timestamp == monthly,"ok");
 	inflationOwner = _inputInflation;
 	monthly = block.timestamp + 4 weeks;
-}
+	}else{
+	monthly = block.timestamp + 4 weeks;
+	}
+	}
 
 // Funzione per calcolare il nuovo prezzo di riferimento con l'inflazione mensile fatta su mese 
 
 function updateReferencePrice(uint256 inflationOwner, uint256 referencePriceOld, uint256 referencePrice, uint256 basePrice) public{
-	referencePriceOld = referencePrice + 0;
+	referencePriceOld = referencePrice;
 	referencePrice = basePrice + (basePrice/100) * inflationOwner;
 	if (referencePrice >= referencePriceOld){ 
 	price = referencePrice;
@@ -76,7 +84,7 @@ function priceExchange(uint256){
 
 }
 
-function stabilityFee(uint256 referencePrice, uint256 fee){
+function stabilityFee(uint256 referencePrice, uint256 fee){ //da mettere nelle funzioni di trasferimento
 	if (referencePrice < priceExchange){
 		fee = referencePrice - priceExchange;
 		payable(owner).transfer(fee);
@@ -85,11 +93,8 @@ function stabilityFee(uint256 referencePrice, uint256 fee){
 		fee = refencePrice - priceExchange;
 		payable(owner).transfer(fee);
 	}
-}
+	}
 
-function Reserve()public view {
-	emit msg("reserve"); //scrivo all'utente la funzione
-}
 */
 
 function transfer(address to, uint256 value) external returns (bool) { 
