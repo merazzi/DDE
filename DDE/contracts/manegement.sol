@@ -2,6 +2,9 @@ contract management{
 
 address public owner = 0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8;
 
+event Mint(address indexed to, uint256 value);
+event Burn(address indexed from, uint256 value); 
+
 function mint(address to, uint256 value) public { //only owner ok
 	require(msg.sender == owner);
 	balances[to] += value;
