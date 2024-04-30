@@ -1,6 +1,24 @@
 // optimation fee
 contract stability_and_transfer{
 
+constructor() {
+	//uint256 reserve = AggregatorV3Interface();
+	//uint256 priceExchange = AggregatorV3Interface();
+	}
+/*
+contract TokenPriceKeeper {
+    AggregatorV3Interface internal priceFeed; // L'interfaccia dell'oracolo Chainlink
+
+    constructor(address _priceFeedAddress) {
+        priceFeed = AggregatorV3Interface(_priceFeedAddress);
+    }
+
+    // Funzione per ottenere il prezzo attuale del token
+    function getTokenPrice() external view returns (int256) {
+        (, int256 price, , , ) = priceFeed.latestRoundData();
+        return price;
+    }
+}
 /*
 function priceExchange(uint256){
 
