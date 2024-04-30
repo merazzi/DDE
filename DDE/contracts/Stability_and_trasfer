@@ -1,6 +1,23 @@
 // optimation fee
 contract stability_and_transfer{
 
+/*
+function priceExchange(uint256){
+
+}
+
+function stabilityFee(uint256 referencePrice, uint256 fee){ //da mettere nelle funzioni di trasferimento
+	if (referencePrice < priceExchange){
+		fee = referencePrice - priceExchange;
+		payable(owner).transfer(fee);
+	}else{
+		//avverto l'utente della transazione che più alta del 1% altrimenti fee
+		fee = refencePrice - priceExchange;
+		payable(owner).transfer(fee);
+	}
+	}
+/*
+
 function transfer(address to, uint256 value) external returns (bool) { 
 	require(balanceOf[msg.sender] >= value, "Insufficient balance");
 	balanceOf[msg.sender] -= value;
