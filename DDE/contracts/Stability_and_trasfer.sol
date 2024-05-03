@@ -6,7 +6,7 @@ contract stability_and_transfer{
 DDE.sol public price;
 // devo mettere apposto l'importazione della variabile price
 constructor(address _indirizzoAltroContratto) {
-	istanzaAltroContratto = AltroContratto(_indirizzoAltroContratto);
+	price = DDE.sol(_price);
 	uint256 priceExchange = AggregatorV3Interface();
 	}
 /*
