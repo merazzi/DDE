@@ -38,7 +38,7 @@ function stabilityFee(uint256 price, uint256 fee){ //da mettere nelle funzioni d
 		payable(owner).transfer(fee);
 	}
 	}
-/*
+*/
 
 function transfer(address to, uint256 value) external returns (bool) { 
 	require(balanceOf[msg.sender] >= value, "Insufficient balance");
