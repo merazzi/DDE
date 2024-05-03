@@ -7,7 +7,7 @@ DDE.sol public price;
 // devo mettere apposto l'importazione della variabile price
 constructor(address _indirizzoAltroContratto) {
 	price = DDE.sol(_price);
-	uint256 priceExchange = AggregatorV3Interface();
+	uint256 priceExchange = AggregatorV3Interface(0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8);
 	}
 /*
 contract TokenPriceKeeper {
@@ -28,8 +28,8 @@ function priceExchange(uint256){
 
 }
 
-function stabilityFee(uint256 referencePrice, uint256 fee){ //da mettere nelle funzioni di trasferimento
-	if (referencePrice < priceExchange){
+function stabilityFee(uint256 price, uint256 fee){ //da mettere nelle funzioni di trasferimento
+	if (price < priceExchange){
 		fee = price - priceExchange;
 		payable(owner).transfer(fee);
 	}else{
@@ -61,6 +61,14 @@ function transferFrom(address from, address to, uint256 value) external returns 
 	balanceOf[from] -= value;
 	balanceOf[to] += value;
 	allowance[from][msg.sender] -= value;
+	if (price < priceExchange){
+		fee = price - priceExchange;
+		payable(owner).transfer(fee);
+	}else{
+		//avverto l'utente della transazione che più alta del 1% altrimenti fee
+		fee = price - priceExchange;
+		payable(owner).transfer(fee);
+	}
 	emit Transfer(from, to, value);
 	return true;
 }
