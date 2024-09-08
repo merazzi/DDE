@@ -1,0 +1,15 @@
+contract updgrade{
+
+address public owner = 0x0d9E9930Df25C3Efe1042528F658d2C74856AeE8;
+
+
+
+function changeStrument(){
+
+}
+
+function Oracle(){
+
+}
+
+}
